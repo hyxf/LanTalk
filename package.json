@@ -1,0 +1,37 @@
+{
+  "name": "@hyxf/lantalk",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "server": "cd server && go run .",
+    "build": "tsc -b && vite build",
+    "build:go": "npm run build && node scripts/copy-static.mjs && cd server && go mod download && mkdir -p ../dist-bin && go build -ldflags=\"-s -w\" -o ../dist-bin/lantalk .",
+    "build:go:win": "npm run build && node scripts/copy-static.mjs && cd server && go mod download && mkdir -p ../dist-bin && go build -ldflags=\"-s -w\" -o ../dist-bin/lantalk.exe .",
+    "build:all": "npm run build && node scripts/copy-static.mjs && node scripts/build-all.mjs",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.0",
+    "ws": "^8.18.0",
+    "lucide-react": "^0.460.0",
+    "qrcode": "^1.5.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/ws": "^8.5.10",
+    "@types/qrcode": "^1.5.5"
+  }
+}

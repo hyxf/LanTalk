@@ -1,0 +1,50 @@
+{
+  "activeGroup" : "build",
+  "groups" : {
+    "Default" : [
+      "package.json",
+      "src/app/App.tsx",
+      "src/features/chat/components/ChatHeader.tsx",
+      "src/features/chat/components/ChatMain.tsx",
+      "src/features/chat/components/InputIsland.tsx",
+      "src/features/chat/components/MessageList.tsx",
+      "src/features/chat/components/ShareModal.tsx",
+      "src/features/chat/hooks.ts",
+      "src/features/chat/store.ts",
+      "src/features/chat/types.ts",
+      "src/features/chat/utils.ts",
+      "src/features/contacts/components/ProfileCard.tsx",
+      "src/features/contacts/components/Sidebar.tsx",
+      "src/features/contacts/components/UserList.tsx",
+      "src/features/contacts/hooks.ts",
+      "src/features/contacts/store.ts",
+      "src/features/contacts/types.ts",
+      "src/features/network/hooks.ts",
+      "src/features/network/notify.ts",
+      "src/features/network/socket.ts",
+      "src/features/network/types.ts",
+      "src/features/theme/hooks.ts",
+      "src/features/theme/store.ts",
+      "src/features/theme/types.ts",
+      "src/main.tsx",
+      "src/styles/index.css"
+    ],
+    "build" : [
+      "build-all.sh",
+      "build.sh",
+      "package.json",
+      "scripts/build-all.mjs",
+      "scripts/copy-static.mjs"
+    ],
+    "server" : [
+      "server/README.md",
+      "server/client.go",
+      "server/go.mod",
+      "server/go.sum",
+      "server/hub.go",
+      "server/main.go",
+      "server/message.go",
+      "server/static/index.html"
+    ]
+  }
+}
