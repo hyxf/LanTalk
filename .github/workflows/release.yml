@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.22
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build project
+        run: npm run build:all
+
+      - name: Package binaries
+        run: |
+          VERSION=${GITHUB_REF_NAME}
+
+          cd dist-bin
+
+          tar -czf lantalk_${VERSION}_linux_amd64.tar.gz lantalk-linux-amd64
+          tar -czf lantalk_${VERSION}_linux_arm64.tar.gz lantalk-linux-arm64
+          tar -czf lantalk_${VERSION}_macos_amd64.tar.gz lantalk-macos-amd64
+          tar -czf lantalk_${VERSION}_macos_arm64.tar.gz lantalk-macos-arm64
+
+          zip lantalk_${VERSION}_windows_amd64.zip lantalk-windows-amd64.exe
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist-bin/*.tar.gz
+            dist-bin/*.zip
+          generate_release_notes: true
