@@ -27,7 +27,7 @@ jobs:
           go-version: 1.22
 
       - name: Install deps
-        run: npm ci
+        run: npm install
 
       - name: Build project
         run: npm run build:all
