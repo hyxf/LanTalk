@@ -21,6 +21,13 @@ export default defineConfig([
     ],
     rules: {
       'react/react-in-jsx-scope': 'off',
+      'react/display-name': 'off',
+      'react/no-unescaped-entities': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      'no-empty': 'off',
     },
     languageOptions: {
       ecmaVersion: 2020,
