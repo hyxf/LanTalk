@@ -1,5 +1,5 @@
 {
-  "activeGroup": "build",
+  "activeGroup": "lint",
   "groups": {
     "Default": [
       "package.json",
@@ -36,6 +36,14 @@
       "scripts/build-all.mjs",
       "scripts/copy-static.mjs"
     ],
+    "lint": [
+      "eslint.config.js",
+      "package.json",
+      "tsconfig.app.json",
+      "tsconfig.json",
+      "tsconfig.node.json",
+      "vite.config.ts"
+    ],
     "server": [
       "server/README.md",
       "server/client.go",
@@ -43,8 +51,7 @@
       "server/go.sum",
       "server/hub.go",
       "server/main.go",
-      "server/message.go",
-      "server/static/index.html"
+      "server/message.go"
     ]
   }
 }
