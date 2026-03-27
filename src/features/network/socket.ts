@@ -50,8 +50,12 @@ class SocketClient {
     }
 
     this.ws.onmessage = event => {
+      if (typeof event.data !== 'string') return
       try {
-        const msg: ServerMessage = JSON.parse(event.data)
+        const raw = JSON.parse(event.data) as unknown
+        if (!raw || typeof raw !== 'object' || !('type' in raw)) return
+
+        const msg = raw as ServerMessage
         this.handlers.forEach(h => h(msg))
       } catch {
         /* ignore */
