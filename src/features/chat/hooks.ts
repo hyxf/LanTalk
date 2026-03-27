@@ -170,7 +170,7 @@ export const useMessageInput = () => {
             id: replyTo.id,
             content: replyTo.content,
             senderName: replyTo.senderName,
-            type: replyTo.type as 'own' | 'other',
+            type: replyTo.type,
           }
         : undefined
 

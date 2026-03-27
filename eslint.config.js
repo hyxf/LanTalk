@@ -32,7 +32,7 @@ export default defineConfig([
       '@typescript-eslint/no-misused-promises': 'warn',
 
       // 可放松
-      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
 
       // JS
       'no-empty': ['warn', { allowEmptyCatch: true }],
