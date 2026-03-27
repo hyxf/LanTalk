@@ -1,7 +1,8 @@
 {
-  "activeGroup": "lint",
+  "activeGroup": "Default",
   "groups": {
     "Default": [
+      "eslint.config.js",
       "package.json",
       "src/app/App.tsx",
       "src/features/chat/components/ChatHeader.tsx",
@@ -21,13 +22,18 @@
       "src/features/contacts/types.ts",
       "src/features/network/hooks.ts",
       "src/features/network/notify.ts",
+      "src/features/network/socket-handler.ts",
       "src/features/network/socket.ts",
       "src/features/network/types.ts",
       "src/features/theme/hooks.ts",
       "src/features/theme/store.ts",
       "src/features/theme/types.ts",
       "src/main.tsx",
-      "src/styles/index.css"
+      "src/styles/index.css",
+      "tsconfig.app.json",
+      "tsconfig.json",
+      "tsconfig.node.json",
+      "vite.config.ts"
     ],
     "build": [
       "build-all.sh",
