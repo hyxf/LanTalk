@@ -1,7 +1,7 @@
 {
-  "activeGroup" : "build",
-  "groups" : {
-    "Default" : [
+  "activeGroup": "build",
+  "groups": {
+    "Default": [
       "package.json",
       "src/app/App.tsx",
       "src/features/chat/components/ChatHeader.tsx",
@@ -29,14 +29,14 @@
       "src/main.tsx",
       "src/styles/index.css"
     ],
-    "build" : [
+    "build": [
       "build-all.sh",
       "build.sh",
       "package.json",
       "scripts/build-all.mjs",
       "scripts/copy-static.mjs"
     ],
-    "server" : [
+    "server": [
       "server/README.md",
       "server/client.go",
       "server/go.mod",

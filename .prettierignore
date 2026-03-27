@@ -1,0 +1,38 @@
+# build output
+dist
+build
+out
+dist-bin
+
+# dependencies
+node_modules
+
+# logs
+*.log
+
+# cache
+.cache
+.temp
+.tmp
+
+# lock files（可选）
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# env
+.env
+.env.*
+
+# coverage
+coverage
+
+# misc
+.DS_Store
+
+*.db
+server
+
+# IDE files
+.github
+.vscode
