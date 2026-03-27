@@ -53,7 +53,7 @@ export const useSocketHandler = () => {
 
   // WebSocket lifecycle + message routing.
   useEffect(() => {
-    requestNotificationPermission()
+    void requestNotificationPermission()
 
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
     const wsUrl = `${wsProtocol}//${window.location.host}/ws`

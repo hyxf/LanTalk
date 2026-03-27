@@ -155,7 +155,7 @@ export const ChatHeader = ({ onMenuClick, onJumpTo }: ChatHeaderProps) => {
           )}
           {searchQuery && results.length === 0 && (
             <div className="search-results-dropdown">
-              <div className="search-no-results">No results for "{searchQuery}"</div>
+              <div className="search-no-results">{`No results for "${searchQuery}"`}</div>
             </div>
           )}
         </div>

@@ -14,7 +14,7 @@ export const ShareModal = ({ onClose }: ShareModalProps) => {
 
   useEffect(() => {
     if (canvasRef.current) {
-      QRCode.toCanvas(canvasRef.current, shareUrl, {
+      void QRCode.toCanvas(canvasRef.current, shareUrl, {
         width: 200,
         margin: 2,
         color: {
