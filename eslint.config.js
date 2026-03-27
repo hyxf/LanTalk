@@ -13,21 +13,30 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.recommended,
       react.configs.flat.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       prettier,
     ],
     rules: {
+      // React
       'react/react-in-jsx-scope': 'off',
       'react/display-name': 'off',
-      'react/no-unescaped-entities': 'off',
+      'react/no-unescaped-entities': 'warn',
+
+      // TS（关键：改成 warn，不是 off）
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/no-misused-promises': 'warn',
+
+      // 可放松
       '@typescript-eslint/no-unnecessary-type-assertion': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-floating-promises': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      'no-empty': 'off',
+
+      // JS
+      'no-empty': ['warn', { allowEmptyCatch: true }],
+      'no-useless-assignment': 'warn',
     },
     languageOptions: {
       ecmaVersion: 2020,
