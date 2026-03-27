@@ -19,6 +19,9 @@ export default defineConfig([
       reactRefresh.configs.vite,
       prettier,
     ],
+    rules: {
+      'react/react-in-jsx-scope': 'off',
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: {
