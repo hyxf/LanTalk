@@ -1,5 +1,5 @@
 #!/bin/bash
-# release.sh
+# release_app.sh
 
 set -euo pipefail
 

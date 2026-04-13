@@ -8,9 +8,8 @@
     "dev": "vite",
     "server": "cd server && go run .",
     "build": "tsc -b && vite build",
-    "build:go": "npm run build && node scripts/copy-static.mjs && cd server && go mod download && mkdir -p ../dist-bin && go build -ldflags=\"-s -w\" -o ../dist-bin/lantalk .",
-    "build:go:win": "npm run build && node scripts/copy-static.mjs && cd server && go mod download && mkdir -p ../dist-bin && go build -ldflags=\"-s -w\" -o ../dist-bin/lantalk.exe .",
-    "build:all": "npm run build && node scripts/copy-static.mjs && node scripts/build-all.mjs",
+    "build:cli": "npm run build && node scripts/copy-static.mjs && cd server && go mod download && ./release_cli.sh",
+    "build:app": "npm run build && node scripts/copy-static.mjs && cd server && go mod download && ./release_app.sh",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write ."
