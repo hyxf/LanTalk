@@ -35,16 +35,22 @@ func newHub() *Hub {
 }
 
 func (h *Hub) run() {
+	stopping := false
 	for {
 		select {
 		case <-h.stop:
+			stopping = true
 			for _, c := range h.clients {
 				c.conn.Close()
 			}
-			return
+			if len(h.clients) == 0 {
+				return
+			}
 
 		case c := <-h.register:
-			h.clients[c.id] = c
+			if !stopping {
+				h.clients[c.id] = c
+			}
 
 		case c := <-h.unregister:
 			if _, ok := h.clients[c.id]; !ok {
@@ -55,7 +61,7 @@ func (h *Hub) run() {
 			delete(h.clients, c.id)
 			close(c.send)
 
-			if wasJoined {
+			if !stopping && wasJoined {
 				h.broadcastAll(ServerMessage{Type: "userList", Users: h.getUserList()})
 				h.broadcast(ServerMessage{
 					Type:    "system",
@@ -63,9 +69,14 @@ func (h *Hub) run() {
 					Time:    nowTime(),
 				}, "")
 			}
+			if stopping && len(h.clients) == 0 {
+				return
+			}
 
 		case im := <-h.incoming:
-			h.handleMessage(im.client, im.msg)
+			if !stopping {
+				h.handleMessage(im.client, im.msg)
+			}
 		}
 	}
 }

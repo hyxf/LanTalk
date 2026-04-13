@@ -70,12 +70,18 @@ func getLocalIPs() []string {
 	return ips
 }
 
-func startServer() (*http.Server, *Hub, string) {
+func startServer() (*http.Server, *Hub, string, error) {
 	port := 3000
 	if p := os.Getenv("PORT"); p != "" {
 		if n, err := strconv.Atoi(p); err == nil {
 			port = n
 		}
+	}
+
+	addr := fmt.Sprintf("0.0.0.0:%d", port)
+	ln, err := net.Listen("tcp", addr)
+	if err != nil {
+		return nil, nil, "", err
 	}
 
 	hub := newHub()
@@ -140,8 +146,7 @@ func startServer() (*http.Server, *Hub, string) {
 		fileServer.ServeHTTP(w, r)
 	})
 
-	addr := fmt.Sprintf("0.0.0.0:%d", port)
-	srv := &http.Server{Addr: addr, Handler: mux}
+	srv := &http.Server{Handler: mux}
 
 	ips := getLocalIPs()
 	fmt.Println()
@@ -159,7 +164,7 @@ func startServer() (*http.Server, *Hub, string) {
 	fmt.Println()
 
 	go func() {
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := srv.Serve(ln); err != nil && err != http.ErrServerClosed {
 			log.Println("server listen error:", err)
 		}
 	}()
@@ -171,12 +176,16 @@ func startServer() (*http.Server, *Hub, string) {
 		lanURL = fmt.Sprintf("http://localhost:%d", port)
 	}
 
-	return srv, hub, lanURL
+	return srv, hub, lanURL, nil
 }
 
 func stopServer(srv *http.Server, hub *Hub) {
 	if hub != nil {
-		close(hub.stop)
+		select {
+		case <-hub.stop:
+		default:
+			close(hub.stop)
+		}
 	}
 	if srv != nil {
 		srv.Close()
