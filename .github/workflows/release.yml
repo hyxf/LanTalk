@@ -27,7 +27,7 @@ jobs:
           go-version: 1.22
 
       - name: Install deps
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build cli
         run: npm run build:cli
