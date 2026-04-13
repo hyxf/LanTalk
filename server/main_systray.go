@@ -3,6 +3,7 @@
 package main
 
 import (
+	_ "embed"
 	"net/http"
 	"sync"
 
@@ -19,8 +20,14 @@ var srv *http.Server
 var hub *Hub
 var lanURL string
 
+//go:embed image/start.png
+var iconStarted []byte
+
+//go:embed image/stop.png
+var iconStopped []byte
+
 func onReady() {
-	systray.SetTitle("LanTalk")
+	// systray.SetTitle("LanTalk")
 	systray.SetTooltip("LanTalk Server")
 
 	mStart := systray.AddMenuItem("Start", "Start LanTalk Server")
@@ -36,10 +43,12 @@ func onReady() {
 		srv = s
 		hub = h
 		lanURL = u
+		systray.SetIcon(iconStopped)
 		mStart.Hide()
 		mStop.Show()
 		mOpen.Show()
 	} else {
+		systray.SetIcon(iconStarted)
 		mStart.Show()
 		mStop.Hide()
 		mOpen.Hide()
@@ -57,12 +66,14 @@ func onReady() {
 						srv = s
 						hub = h
 						lanURL = u
+						systray.SetIcon(iconStopped)
 						mStart.Hide()
 						mStop.Show()
 						mOpen.Show()
 					}
 				}
 				mu.Unlock()
+
 			case <-mStop.ClickedCh:
 				mu.Lock()
 				if srv != nil {
@@ -70,18 +81,21 @@ func onReady() {
 					srv = nil
 					hub = nil
 					lanURL = ""
+					systray.SetIcon(iconStarted)
 					mStart.Show()
 					mStop.Hide()
 					mOpen.Hide()
 				}
 				mu.Unlock()
+
 			case <-mOpen.ClickedCh:
 				mu.Lock()
 				u := lanURL
 				mu.Unlock()
 				if u != "" {
-					browser.OpenURL(u)
+					_ = browser.OpenURL(u)
 				}
+
 			case <-mQuit.ClickedCh:
 				systray.Quit()
 				return
@@ -93,6 +107,7 @@ func onReady() {
 func onExit() {
 	mu.Lock()
 	defer mu.Unlock()
+
 	if srv != nil {
 		stopServer(srv, hub)
 	}
