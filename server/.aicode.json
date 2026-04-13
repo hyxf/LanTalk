@@ -1,0 +1,14 @@
+{
+  "activeGroup" : "Default",
+  "groups" : {
+    "Default" : [
+      "README.md",
+      "client.go",
+      "go.mod",
+      "go.sum",
+      "hub.go",
+      "main.go",
+      "message.go"
+    ]
+  }
+}
