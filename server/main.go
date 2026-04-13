@@ -70,7 +70,7 @@ func getLocalIPs() []string {
 	return ips
 }
 
-func main() {
+func startServer() (*http.Server, *Hub, string) {
 	port := 3000
 	if p := os.Getenv("PORT"); p != "" {
 		if n, err := strconv.Atoi(p); err == nil {
@@ -158,5 +158,28 @@ func main() {
 	}
 	fmt.Println()
 
-	log.Fatal(srv.ListenAndServe())
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Println("server listen error:", err)
+		}
+	}()
+
+	var lanURL string
+	if len(ips) > 0 {
+		lanURL = fmt.Sprintf("http://%s:%d", ips[0], port)
+	} else {
+		lanURL = fmt.Sprintf("http://localhost:%d", port)
+	}
+
+	return srv, hub, lanURL
+}
+
+func stopServer(srv *http.Server, hub *Hub) {
+	if hub != nil {
+		close(hub.stop)
+	}
+	if srv != nil {
+		srv.Close()
+		fmt.Println("🛑 LanTalk Server stopped.")
+	}
 }

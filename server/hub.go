@@ -17,6 +17,7 @@ type Hub struct {
 	register   chan *Client
 	unregister chan *Client
 	incoming   chan incomingMsg
+	stop       chan struct{}
 
 	msgOwners map[string]string
 	ownerKeys []string
@@ -28,6 +29,7 @@ func newHub() *Hub {
 		register:   make(chan *Client, 16),
 		unregister: make(chan *Client, 16),
 		incoming:   make(chan incomingMsg, 64),
+		stop:       make(chan struct{}),
 		msgOwners:  make(map[string]string),
 	}
 }
@@ -35,6 +37,12 @@ func newHub() *Hub {
 func (h *Hub) run() {
 	for {
 		select {
+		case <-h.stop:
+			for _, c := range h.clients {
+				c.conn.Close()
+			}
+			return
+
 		case c := <-h.register:
 			h.clients[c.id] = c
 
